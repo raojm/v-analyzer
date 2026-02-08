@@ -134,10 +134,16 @@ pub fn (mut ls LanguageServer) handle_jsonrpc(request &jsonrpc.Request, mut rw j
 		// but we'll just put it here since we want to formally
 		// shutdown the server after a certain timeout period.
 		'shutdown' {
+			loglib.info("get shutdown request req_id: ${rw.req_id}")
+			// ls.writer.write_request('shutdown', jsonrpc.null)
+			// rw.write_notify('shutdown', jsonrpc.null)
+			rw.write_empty()
 			ls.shutdown()
 			return
 		}
 		'exit' {
+			loglib.info("get exit request req_id: ${rw.req_id}")
+			rw.write_empty()
 			ls.exit()
 			return
 		}
